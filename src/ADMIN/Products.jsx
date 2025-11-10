@@ -36,7 +36,7 @@ function Products() {
           ...form,
           status: "active",
         })
-        .then((res) => setProducts([...products, res.data]));
+        .then((res) => setProducts([ res.data , ...products]));
       reset();
     }
   };

@@ -11,7 +11,6 @@ function Login() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
- 
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
@@ -24,7 +23,6 @@ function Login() {
     }
   }, [navigate]);
 
-  
   function handleChange(e) {
     setData((prev) => ({
       ...prev,
@@ -32,7 +30,6 @@ function Login() {
     }));
   }
 
- 
   function validate(data) {
     const errors = {};
     if (!data.email.includes("@") || !data.email.includes(".com")) {
@@ -43,7 +40,6 @@ function Login() {
     }
     return errors;
   }
-
 
   function submit(e) {
     e.preventDefault();
@@ -58,18 +54,14 @@ function Login() {
             (u) => u.email === Data.email && u.password === Data.password
           );
 
-          if (user&&user.status==="active") {
-           
+          if (user && user.status === "active") {
             localStorage.setItem("user", JSON.stringify(user));
-
-            
             if (user.role === "admin") {
               navigate("/admin/dashboard", { replace: true });
             } else {
               navigate("/", { replace: true });
             }
           } else {
-            
             setErrors({ general: "Invalid Email or Password" });
           }
         })
@@ -81,59 +73,71 @@ function Login() {
   }
 
   return (
-    <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('https://cdn.pixabay.com/photo/2022/08/31/09/56/mountains-7422920_640.png')",
-      }}
-    >
-      <div className="bg-gray-500 bg-opacity-80 p-8 rounded-lg shadow-lg w-96 flex flex-col gap-4">
-        <h2 className="text-2xl font-bold text-center text-white">Login</h2>
+    <div className="relative flex justify-center items-center min-h-screen overflow-hidden">
+     
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://m.media-amazon.com/images/I/81kvOSiyX4L.jpg')",
+        }}
+      ></div>
 
-       
+      
+      <div className="absolute inset-0 bg-black/50"></div>
+
+    
+      <div className="relative z-10 w-96 p-8 rounded-2xl shadow-2xl bg-white/20 backdrop-blur-lg border border-white/30">
+        <h2 className="text-3xl font-bold text-center text-white mb-6">
+          Login
+        </h2>
+
         {errors.general && (
-          <div className="bg-red-600 text-white p-2 rounded text-center">
+          <div className="bg-red-600 text-white p-2 rounded text-center mb-3">
             {errors.general}
           </div>
         )}
 
-        <form onSubmit={submit} className="flex flex-col gap-3">
-          <label className="font-medium text-white">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={Data.email}
-            onChange={handleChange}
-            className="p-2 bg-amber-100 rounded-md border"
-          />
-          {errors.email && (
-            <p className="text-red-600 text-sm">{errors.email}</p>
-          )}
+        <form onSubmit={submit} className="flex flex-col gap-4">
+          <div>
+            <label className="font-medium text-white">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={Data.email}
+              onChange={handleChange}
+              className="w-full p-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors.email && (
+              <p className="text-red-300 text-sm mt-1">{errors.email}</p>
+            )}
+          </div>
 
-          <label className="font-medium text-white">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={Data.password}
-            onChange={handleChange}
-            className="p-2 bg-amber-100 rounded-md border"
-          />
-          {errors.password && (
-            <p className="text-red-600 text-sm">{errors.password}</p>
-          )}
+          <div>
+            <label className="font-medium text-white">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={Data.password}
+              onChange={handleChange}
+              className="w-full p-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            {errors.password && (
+              <p className="text-red-300 text-sm mt-1">{errors.password}</p>
+            )}
+          </div>
 
           <button
             type="submit"
-            className="mt-2 py-2 px-4 bg-white text-gray-800 font-bold rounded-md hover:bg-gray-800 hover:text-white"
+            className="mt-3 py-2 px-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition-all"
           >
             Login
           </button>
         </form>
 
-        <p className="text-black text-center">
+        <p className="text-gray-200 text-center mt-4">
           Don’t have an account?{" "}
-          <Link to="/register" className="text-blue-900 underline">
+          <Link to="/register" className="text-yellow-300 underline">
             Register
           </Link>
         </p>
